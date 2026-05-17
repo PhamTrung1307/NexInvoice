@@ -1,0 +1,11 @@
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\bin\Debug\net10.0\NexInvoice.Domain.deps.json
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\bin\Debug\net10.0\NexInvoice.Domain.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\bin\Debug\net10.0\NexInvoice.Domain.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\NexInvoice.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\NexInvoice.Domain.AssemblyInfoInputs.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\NexInvoice.Domain.AssemblyInfo.cs
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\NexInvoice.Domain.csproj.CoreCompileInputs.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\NexInvoice.Domain.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\refint\NexInvoice.Domain.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\NexInvoice.Domain.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\ref\NexInvoice.Domain.dll

@@ -1,0 +1,6 @@
+@NexInvoice.API_HostAddress = http://localhost:5206
+
+GET {{NexInvoice.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

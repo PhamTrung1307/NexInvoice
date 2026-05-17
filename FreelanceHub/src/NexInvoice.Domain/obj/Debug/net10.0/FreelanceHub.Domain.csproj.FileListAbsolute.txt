@@ -1,0 +1,11 @@
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\bin\Debug\net10.0\FreelanceHub.Domain.deps.json
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\bin\Debug\net10.0\FreelanceHub.Domain.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\bin\Debug\net10.0\FreelanceHub.Domain.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\obj\Debug\net10.0\FreelanceHub.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\obj\Debug\net10.0\FreelanceHub.Domain.AssemblyInfoInputs.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\obj\Debug\net10.0\FreelanceHub.Domain.AssemblyInfo.cs
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\obj\Debug\net10.0\FreelanceHub.Domain.csproj.CoreCompileInputs.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\obj\Debug\net10.0\FreelanceHub.Domain.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\obj\Debug\net10.0\refint\FreelanceHub.Domain.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\obj\Debug\net10.0\FreelanceHub.Domain.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Domain\obj\Debug\net10.0\ref\FreelanceHub.Domain.dll

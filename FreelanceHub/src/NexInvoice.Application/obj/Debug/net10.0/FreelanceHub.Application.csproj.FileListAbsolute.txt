@@ -1,0 +1,15 @@
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\bin\Debug\net10.0\FreelanceHub.Application.deps.json
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\bin\Debug\net10.0\FreelanceHub.Application.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\bin\Debug\net10.0\FreelanceHub.Application.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\bin\Debug\net10.0\FreelanceHub.Domain.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\bin\Debug\net10.0\FreelanceHub.Domain.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\FreelanceHub.Application.csproj.AssemblyReference.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\FreelanceHub.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\FreelanceHub.Application.AssemblyInfoInputs.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\FreelanceHub.Application.AssemblyInfo.cs
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\FreelanceHub.Application.csproj.CoreCompileInputs.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\Freelanc.B6A918F8.Up2Date
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\FreelanceHub.Application.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\refint\FreelanceHub.Application.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\FreelanceHub.Application.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\FreelanceHub.Application\obj\Debug\net10.0\ref\FreelanceHub.Application.dll

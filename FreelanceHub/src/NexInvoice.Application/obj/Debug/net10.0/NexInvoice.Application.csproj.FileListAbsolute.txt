@@ -1,0 +1,15 @@
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\bin\Debug\net10.0\NexInvoice.Application.deps.json
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\bin\Debug\net10.0\NexInvoice.Application.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\bin\Debug\net10.0\NexInvoice.Application.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\bin\Debug\net10.0\NexInvoice.Domain.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\bin\Debug\net10.0\NexInvoice.Domain.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoice.Application.csproj.AssemblyReference.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoice.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoice.Application.AssemblyInfoInputs.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoice.Application.AssemblyInfo.cs
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoice.Application.csproj.CoreCompileInputs.cache
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoi.78E67A7F.Up2Date
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoice.Application.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\refint\NexInvoice.Application.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoice.Application.pdb
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\ref\NexInvoice.Application.dll

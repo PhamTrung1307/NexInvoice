@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/NexInvoice.API/NexInvoice.API.csproj" />
+    <Project Path="src/NexInvoice.Application/NexInvoice.Application.csproj" />
+    <Project Path="src/NexInvoice.Domain/NexInvoice.Domain.csproj" />
+    <Project Path="src/NexInvoice.Infrastructure/NexInvoice.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NexInvoice.UnitTests/NexInvoice.UnitTests.csproj" />
+  </Folder>
+</Solution>
