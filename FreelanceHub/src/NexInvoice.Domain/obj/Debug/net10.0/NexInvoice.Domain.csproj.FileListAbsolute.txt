@@ -9,3 +9,4 @@ C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\refint\NexInvoice.Domain.dll
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\NexInvoice.Domain.pdb
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\ref\NexInvoice.Domain.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Domain\obj\Debug\net10.0\NexInvoice.Domain.sourcelink.json

@@ -36,3 +36,4 @@ C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Infrastruc
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Infrastructure\obj\Debug\net10.0\NexInvoice.Infrastructure.pdb
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Infrastructure\obj\Debug\net10.0\NexInvoice.Infrastructure.genruntimeconfig.cache
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Infrastructure\obj\Debug\net10.0\ref\NexInvoice.Infrastructure.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Infrastructure\obj\Debug\net10.0\NexInvoice.Infrastructure.sourcelink.json

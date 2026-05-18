@@ -236,3 +236,13 @@ C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\obj\De
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\obj\Debug\net10.0\NexInvoice.API.pdb
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\obj\Debug\net10.0\NexInvoice.API.genruntimeconfig.cache
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\obj\Debug\net10.0\ref\NexInvoice.API.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\bin\Debug\net10.0\Serilog.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\bin\Debug\net10.0\Serilog.AspNetCore.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\bin\Debug\net10.0\Serilog.Extensions.Hosting.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\bin\Debug\net10.0\Serilog.Extensions.Logging.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\bin\Debug\net10.0\Serilog.Formatting.Compact.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\bin\Debug\net10.0\Serilog.Settings.Configuration.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\bin\Debug\net10.0\Serilog.Sinks.Console.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\bin\Debug\net10.0\Serilog.Sinks.Debug.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\bin\Debug\net10.0\Serilog.Sinks.File.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.API\obj\Debug\net10.0\NexInvoice.API.sourcelink.json

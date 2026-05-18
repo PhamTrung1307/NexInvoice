@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
 
 namespace NexInvoice.API.Extensions;
 
@@ -59,14 +59,20 @@ public static class ServiceCollectionExtensions
                 Description = "Dán JWT token. Swagger sẽ tự thêm tiền tố Bearer."
             });
 
-            options.AddSecurityRequirement(openApiDocument => new OpenApiSecurityRequirement
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 [
-                    new OpenApiSecuritySchemeReference("Bearer", openApiDocument, null)
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    }
                 ] = []
             });
         });
-        services.AddOpenApi();
         services.AddSignalR();
         services.AddSingleton<IUserIdProvider, UserIdProvider>();
         services.AddScoped<IRealtimeNotificationService, SignalRRealtimeNotificationService>();

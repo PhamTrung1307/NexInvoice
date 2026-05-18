@@ -219,3 +219,4 @@ C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\tests\NexInvoice.UnitTest
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\tests\NexInvoice.UnitTests\obj\Debug\net10.0\NexInvoice.UnitTests.pdb
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\tests\NexInvoice.UnitTests\obj\Debug\net10.0\NexInvoice.UnitTests.genruntimeconfig.cache
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\tests\NexInvoice.UnitTests\obj\Debug\net10.0\ref\NexInvoice.UnitTests.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\tests\NexInvoice.UnitTests\obj\Debug\net10.0\NexInvoice.UnitTests.sourcelink.json

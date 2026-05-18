@@ -5,8 +5,13 @@ using NexInvoice.Application;
 using NexInvoice.Infrastructure;
 using NexInvoice.Infrastructure.Data;
 using NexInvoice.Infrastructure.BackgroundJobs;
+using Microsoft.AspNetCore.HttpOverrides;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services
     .AddApiServices()
@@ -20,15 +25,26 @@ var app = builder.Build();
 
 await app.Services.InitializeDatabaseAsync();
 
-if (app.Environment.IsDevelopment())
+var swaggerEnabled = app.Environment.IsDevelopment()
+    || app.Configuration.GetValue<bool>("Swagger:Enabled");
+
+if (swaggerEnabled)
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 app.UseApiMiddleware();
-app.UseHttpsRedirection();
+app.UseSerilogRequestLogging();
+
+if (!app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
+}
 app.UseStaticFiles();
 app.UseCors("ReactFrontend");
 app.UseAuthentication();

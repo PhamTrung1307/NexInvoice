@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Trung")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0c9b0b4d4aa68ebfe6e227cf84c51b3c06fa6a3")]
 [assembly: System.Reflection.AssemblyProductAttribute("NexInvoice")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NexInvoice.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

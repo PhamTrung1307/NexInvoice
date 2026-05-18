@@ -18,16 +18,24 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
-        var redisConnectionString = configuration.GetConnectionString("Redis")
-            ?? throw new InvalidOperationException("Connection string 'Redis' is not configured.");
+        var redisEnabled = configuration.GetValue<bool>("Redis:Enabled");
+        var redisConnectionString = configuration.GetConnectionString("Redis");
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
-        services.AddStackExchangeRedisCache(options =>
+
+        if (redisEnabled && !string.IsNullOrWhiteSpace(redisConnectionString))
         {
-            options.Configuration = redisConnectionString;
-            options.InstanceName = configuration.GetValue<string>("Redis:InstanceName") ?? "NexInvoice:";
-        });
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = redisConnectionString;
+                options.InstanceName = configuration.GetValue<string>("Redis:InstanceName") ?? "NexInvoice:";
+            });
+        }
+        else
+        {
+            services.AddDistributedMemoryCache();
+        }
 
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         services.Configure<FreelancerSettings>(configuration.GetSection("Freelancer"));

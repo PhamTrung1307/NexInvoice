@@ -13,3 +13,4 @@ C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Applicatio
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\refint\NexInvoice.Application.dll
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoice.Application.pdb
 C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\ref\NexInvoice.Application.dll
+C:\Users\phamn\Desktop\Code\DuAn\MISystem\FreelanceHub\src\NexInvoice.Application\obj\Debug\net10.0\NexInvoice.Application.sourcelink.json

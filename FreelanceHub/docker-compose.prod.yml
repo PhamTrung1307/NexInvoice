@@ -1,0 +1,102 @@
+name: nexinvoice
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/NexInvoice.API/Dockerfile
+    container_name: nexinvoice-api
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=NexInvoiceDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=True;Connection Timeout=30;"
+      ConnectionStrings__Redis: redis:6379
+      JwtSettings__SecretKey: ${JWT_SECRET_KEY}
+      JwtSettings__Secret: ${JWT_SECRET_KEY}
+      JwtSettings__Issuer: ${JWT_ISSUER}
+      JwtSettings__Audience: ${JWT_AUDIENCE}
+      Cors__AllowedOrigins__0: ${FRONTEND_URL}
+      Redis__Enabled: ${REDIS_ENABLED:-false}
+      Redis__InstanceName: "NexInvoice:"
+      Swagger__Enabled: ${SWAGGER_ENABLED:-false}
+      Database__SeedDemoUsers: ${SEED_DEMO_USERS:-false}
+      Database__SeedFakeData: ${SEED_FAKE_DATA:-false}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    expose:
+      - "8080"
+    networks:
+      - nexinvoice-network
+
+  frontend:
+    build:
+      context: ./nexinvoice-web
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api/v1}
+    container_name: nexinvoice-frontend
+    restart: unless-stopped
+    expose:
+      - "8080"
+    networks:
+      - nexinvoice-network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: nexinvoice-sqlserver
+    restart: unless-stopped
+    mem_limit: 2g
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${SA_PASSWORD}
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
+      MSSQL_PID: Express
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -C -Q \"SELECT 1\" || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -Q \"SELECT 1\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+    networks:
+      - nexinvoice-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: nexinvoice-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    profiles:
+      - redis
+    volumes:
+      - redis-data:/data
+    networks:
+      - nexinvoice-network
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: nexinvoice-nginx
+    restart: unless-stopped
+    depends_on:
+      - api
+      - frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - ./nginx/certbot/www:/var/www/certbot:ro
+    networks:
+      - nexinvoice-network
+
+volumes:
+  sqlserver-data:
+  redis-data:
+
+networks:
+  nexinvoice-network:
+    driver: bridge

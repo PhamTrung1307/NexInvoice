@@ -6,5 +6,11 @@
 **/dist/
 nexinvoice-web/
 tests/
+.env
+.env.*
+docker-compose*.yml
+DEPLOYMENT_VPS.md
+nginx/certs/
+nginx/certbot/
 *.user
 *.suo

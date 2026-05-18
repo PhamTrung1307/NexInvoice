@@ -4,6 +4,7 @@ using NexInvoice.Domain.Entities;
 using NexInvoice.Domain.Enums;
 using NexInvoice.Infrastructure.Data.FakeData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace NexInvoice.Infrastructure.Data;
 
@@ -18,11 +19,16 @@ internal sealed class DatabaseInitializer
     private const int TargetNotificationCount = 1_000;
 
     private readonly AppDbContext _dbContext;
+    private readonly IConfiguration _configuration;
     private readonly AppDbContextSeeder _systemSeeder;
 
-    public DatabaseInitializer(AppDbContext dbContext, AppDbContextSeeder systemSeeder)
+    public DatabaseInitializer(
+        AppDbContext dbContext,
+        IConfiguration configuration,
+        AppDbContextSeeder systemSeeder)
     {
         _dbContext = dbContext;
+        _configuration = configuration;
         _systemSeeder = systemSeeder;
     }
 
@@ -31,7 +37,8 @@ internal sealed class DatabaseInitializer
         await _dbContext.Database.MigrateAsync(cancellationToken);
         await _systemSeeder.SeedAsync(cancellationToken);
 
-        if (await HasBusinessDataAsync(cancellationToken))
+        if (!_configuration.GetValue<bool>("Database:SeedFakeData")
+            || await HasBusinessDataAsync(cancellationToken))
         {
             return;
         }

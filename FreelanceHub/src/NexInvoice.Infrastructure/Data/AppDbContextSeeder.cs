@@ -1,6 +1,7 @@
 using NexInvoice.Application.Common.Authorization;
 using NexInvoice.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace NexInvoice.Infrastructure.Data;
 
@@ -14,10 +15,12 @@ internal sealed class AppDbContextSeeder
     private const string CustomerPassword = "Customer@123";
 
     private readonly AppDbContext _dbContext;
+    private readonly IConfiguration _configuration;
 
-    public AppDbContextSeeder(AppDbContext dbContext)
+    public AppDbContextSeeder(AppDbContext dbContext, IConfiguration configuration)
     {
         _dbContext = dbContext;
+        _configuration = configuration;
     }
 
     public async Task SeedAsync(CancellationToken cancellationToken = default)
@@ -25,7 +28,10 @@ internal sealed class AppDbContextSeeder
         await SeedRolesAsync(cancellationToken);
         await SeedPermissionsAsync(cancellationToken);
         await SeedRolePermissionsAsync(cancellationToken);
-        await SeedDemoUsersAsync(cancellationToken);
+        if (_configuration.GetValue<bool>("Database:SeedDemoUsers"))
+        {
+            await SeedDemoUsersAsync(cancellationToken);
+        }
     }
 
     private async Task SeedRolesAsync(CancellationToken cancellationToken)
