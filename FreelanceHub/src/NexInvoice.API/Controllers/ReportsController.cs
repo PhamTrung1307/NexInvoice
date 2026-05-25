@@ -1,3 +1,5 @@
+using NexInvoice.API.Authorization;
+using NexInvoice.Application.Common.Authorization;
 using NexInvoice.Application.Common.Models;
 using NexInvoice.Application.Features.Reports;
 using NexInvoice.Application.Interfaces;
@@ -19,6 +21,7 @@ public sealed class ReportsController : ControllerBase
     }
 
     [HttpGet("revenue")]
+    [HasPermission(AppPermissions.ReportView)]
     public async Task<ActionResult<ApiResponse<RevenueReportResponse>>> GetRevenue(
         [FromQuery] ReportQueryParameters query,
         CancellationToken cancellationToken)
@@ -28,6 +31,7 @@ public sealed class ReportsController : ControllerBase
     }
 
     [HttpGet("invoice-status")]
+    [HasPermission(AppPermissions.ReportView)]
     public async Task<ActionResult<ApiResponse<InvoiceStatusReportResponse>>> GetInvoiceStatus(
         [FromQuery] ReportQueryParameters query,
         CancellationToken cancellationToken)
@@ -37,6 +41,7 @@ public sealed class ReportsController : ControllerBase
     }
 
     [HttpGet("project-progress")]
+    [HasPermission(AppPermissions.ReportView)]
     public async Task<ActionResult<ApiResponse<ProjectProgressReportResponse>>> GetProjectProgress(
         [FromQuery] ReportQueryParameters query,
         CancellationToken cancellationToken)
@@ -46,6 +51,7 @@ public sealed class ReportsController : ControllerBase
     }
 
     [HttpGet("customer-revenue")]
+    [HasPermission(AppPermissions.ReportView)]
     public async Task<ActionResult<ApiResponse<CustomerRevenueReportResponse>>> GetCustomerRevenue(
         [FromQuery] ReportQueryParameters query,
         CancellationToken cancellationToken)

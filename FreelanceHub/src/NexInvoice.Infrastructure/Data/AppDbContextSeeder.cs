@@ -104,6 +104,12 @@ internal sealed class AppDbContextSeeder
                 AppPermissions.PaymentView,
                 AppPermissions.PaymentCreate,
                 AppPermissions.PaymentUpdate,
+                AppPermissions.ContractView,
+                AppPermissions.ContractCreate,
+                AppPermissions.ContractUpdate,
+                AppPermissions.ContractDelete,
+                AppPermissions.ReportView,
+                AppPermissions.SettingsManage,
                 AppPermissions.DashboardView
             },
             cancellationToken);
@@ -115,6 +121,7 @@ internal sealed class AppDbContextSeeder
                 AppPermissions.TaskView,
                 AppPermissions.InvoiceView,
                 AppPermissions.PaymentView,
+                AppPermissions.ContractView,
                 AppPermissions.DashboardView
             },
             cancellationToken);

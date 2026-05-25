@@ -19,6 +19,12 @@ public static class AppPermissions
     public const string PaymentView = "payment.view";
     public const string PaymentCreate = "payment.create";
     public const string PaymentUpdate = "payment.update";
+    public const string ContractView = "contract.view";
+    public const string ContractCreate = "contract.create";
+    public const string ContractUpdate = "contract.update";
+    public const string ContractDelete = "contract.delete";
+    public const string ReportView = "report.view";
+    public const string SettingsManage = "settings.manage";
     public const string DashboardView = "dashboard.view";
 
     public static readonly IReadOnlyCollection<string> All =
@@ -40,6 +46,12 @@ public static class AppPermissions
         PaymentView,
         PaymentCreate,
         PaymentUpdate,
+        ContractView,
+        ContractCreate,
+        ContractUpdate,
+        ContractDelete,
+        ReportView,
+        SettingsManage,
         DashboardView
     ];
 }

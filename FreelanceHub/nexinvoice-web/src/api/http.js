@@ -6,6 +6,8 @@ export const http = axios.create({
   baseURL: API_BASE_URL,
 })
 
+let refreshTokenRequest = null
+
 http.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken')
 
@@ -18,16 +20,61 @@ http.interceptors.request.use((config) => {
 
 http.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('accessToken')
-      localStorage.removeItem('refreshToken')
-      localStorage.removeItem('currentUser')
+  async (error) => {
+    const originalRequest = error.config
+
+    if (
+      error.response?.status === 401 &&
+      originalRequest &&
+      !originalRequest._retry &&
+      !originalRequest.skipAuthRefresh &&
+      !originalRequest.url?.includes('/auth/login') &&
+      !originalRequest.url?.includes('/auth/refresh-token')
+    ) {
+      originalRequest._retry = true
+
+      try {
+        const refreshToken = localStorage.getItem('refreshToken')
+        if (!refreshToken) throw error
+
+        refreshTokenRequest ??= http
+          .post('/auth/refresh-token', { refreshToken }, { skipAuthRefresh: true })
+          .then((response) => response.data?.data ?? response.data)
+          .finally(() => {
+            refreshTokenRequest = null
+          })
+
+        const data = await refreshTokenRequest
+        localStorage.setItem('accessToken', data.accessToken)
+        localStorage.setItem('refreshToken', data.refreshToken)
+        localStorage.setItem(
+          'currentUser',
+          JSON.stringify({
+            id: data.userId,
+            email: data.email,
+            fullName: data.fullName,
+            roles: data.roles,
+          }),
+        )
+
+        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`
+        return http(originalRequest)
+      } catch {
+        clearSession()
+      }
+    } else if (error.response?.status === 401 && !originalRequest?.skipAuthRefresh) {
+      clearSession()
     }
 
     return Promise.reject(error)
   },
 )
+
+export function clearSession() {
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+  localStorage.removeItem('currentUser')
+}
 
 export function unwrap(response) {
   return response.data?.data ?? response.data

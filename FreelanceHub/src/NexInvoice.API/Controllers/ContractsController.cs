@@ -1,3 +1,5 @@
+using NexInvoice.API.Authorization;
+using NexInvoice.Application.Common.Authorization;
 using NexInvoice.Application.Common.Models;
 using NexInvoice.Application.Features.Contracts;
 using NexInvoice.Application.Interfaces;
@@ -19,6 +21,7 @@ public sealed class ContractsController : ControllerBase
     }
 
     [HttpGet]
+    [HasPermission(AppPermissions.ContractView)]
     public async Task<ActionResult<ApiResponse<PagedResult<ContractResponse>>>> GetContracts(
         [FromQuery] ContractQueryParameters query,
         CancellationToken cancellationToken)
@@ -28,6 +31,7 @@ public sealed class ContractsController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
+    [HasPermission(AppPermissions.ContractView)]
     public async Task<ActionResult<ApiResponse<ContractResponse>>> GetContract(
         Guid id,
         CancellationToken cancellationToken)
@@ -37,6 +41,7 @@ public sealed class ContractsController : ControllerBase
     }
 
     [HttpPost]
+    [HasPermission(AppPermissions.ContractCreate)]
     public async Task<ActionResult<ApiResponse<ContractResponse>>> CreateContract(
         CreateContractRequest request,
         CancellationToken cancellationToken)
@@ -49,6 +54,7 @@ public sealed class ContractsController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
+    [HasPermission(AppPermissions.ContractUpdate)]
     public async Task<ActionResult<ApiResponse<ContractResponse>>> UpdateContract(
         Guid id,
         UpdateContractRequest request,
@@ -59,6 +65,7 @@ public sealed class ContractsController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [HasPermission(AppPermissions.ContractDelete)]
     public async Task<ActionResult<ApiResponse<object>>> DeleteContract(
         Guid id,
         CancellationToken cancellationToken)
@@ -68,6 +75,7 @@ public sealed class ContractsController : ControllerBase
     }
 
     [HttpPost("{id:guid}/upload")]
+    [HasPermission(AppPermissions.ContractUpdate)]
     [RequestSizeLimit(10 * 1024 * 1024)]
     public async Task<ActionResult<ApiResponse<ContractResponse>>> UploadContract(
         Guid id,
@@ -84,6 +92,7 @@ public sealed class ContractsController : ControllerBase
     }
 
     [HttpGet("{id:guid}/download")]
+    [HasPermission(AppPermissions.ContractView)]
     public async Task<IActionResult> DownloadContract(Guid id, CancellationToken cancellationToken)
     {
         var result = await _contractService.DownloadAsync(id, cancellationToken);
@@ -91,6 +100,7 @@ public sealed class ContractsController : ControllerBase
     }
 
     [HttpPatch("{id:guid}/approve")]
+    [HasPermission(AppPermissions.ContractUpdate)]
     public async Task<ActionResult<ApiResponse<ContractResponse>>> ApproveContract(
         Guid id,
         CancellationToken cancellationToken)
@@ -100,6 +110,7 @@ public sealed class ContractsController : ControllerBase
     }
 
     [HttpPatch("{id:guid}/reject")]
+    [HasPermission(AppPermissions.ContractUpdate)]
     public async Task<ActionResult<ApiResponse<ContractResponse>>> RejectContract(
         Guid id,
         RejectContractRequest request,

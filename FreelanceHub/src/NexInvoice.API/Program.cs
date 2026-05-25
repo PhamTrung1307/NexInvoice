@@ -16,14 +16,21 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
 builder.Services
     .AddApiServices()
     .AddReactCors(builder.Configuration)
-    .AddHangfireServices(builder.Configuration)
     .AddJwtAuthentication(builder.Configuration)
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
+if (!builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddHangfireServices(builder.Configuration);
+}
+
 var app = builder.Build();
 
-await app.Services.InitializeDatabaseAsync();
+if (!app.Environment.IsEnvironment("Testing"))
+{
+    await app.Services.InitializeDatabaseAsync();
+}
 
 var swaggerEnabled = app.Environment.IsDevelopment()
     || app.Configuration.GetValue<bool>("Swagger:Enabled");
@@ -49,13 +56,21 @@ app.UseStaticFiles();
 app.UseCors("ReactFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHangfireDashboard("/hangfire");
+if (!app.Environment.IsEnvironment("Testing"))
+{
+    app.UseHangfireDashboard("/hangfire");
+}
 app.MapControllers();
 app.MapHub<NotificationHub>("/hubs/notifications");
 
-RecurringJob.AddOrUpdate<InvoiceReminderJob>(
-    "invoice-reminder-job",
-    job => job.RunAsync(),
-    Cron.Daily);
+if (!app.Environment.IsEnvironment("Testing"))
+{
+    RecurringJob.AddOrUpdate<InvoiceReminderJob>(
+        "invoice-reminder-job",
+        job => job.RunAsync(),
+        Cron.Daily);
+}
 
 app.Run();
+
+public partial class Program;

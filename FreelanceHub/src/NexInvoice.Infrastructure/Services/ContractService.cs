@@ -14,6 +14,11 @@ internal sealed class ContractService : IContractService
 {
     private const long MaxFileSizeInBytes = 10 * 1024 * 1024;
     private static readonly HashSet<string> AllowedExtensions = new(StringComparer.OrdinalIgnoreCase) { ".pdf", ".docx" };
+    private static readonly HashSet<string> AllowedContentTypes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    };
 
     private readonly AppDbContext _dbContext;
     private readonly IWebHostEnvironment _webHostEnvironment;
@@ -136,8 +141,7 @@ internal sealed class ContractService : IContractService
         Directory.CreateDirectory(uploadsRoot);
 
         var originalFileName = Path.GetFileName(request.FileName);
-        var extension = Path.GetExtension(originalFileName);
-        var storedFileName = $"{Guid.NewGuid():N}{extension}";
+        var storedFileName = CreateStoredContractFileName(request);
         var storedFilePath = Path.Combine(uploadsRoot, storedFileName);
 
         await using (var fileStream = File.Create(storedFilePath))
@@ -291,27 +295,25 @@ internal sealed class ContractService : IContractService
             throw new BadRequestException("Tệp hợp đồng là bắt buộc.");
         }
 
-        if (request.SizeInBytes > MaxFileSizeInBytes)
-        {
-            throw new BadRequestException("Kích thước tệp không được vượt quá 10MB.");
-        }
+        _ = CreateStoredContractFileName(request);
+    }
 
-        var extension = Path.GetExtension(request.FileName);
-        if (string.IsNullOrWhiteSpace(extension) || !AllowedExtensions.Contains(extension))
-        {
-            throw new BadRequestException("Chỉ hỗ trợ tệp pdf hoặc docx.");
-        }
+    private static string CreateStoredContractFileName(UploadContractFileRequest request)
+    {
+        return FileUploadGuard.ValidateAndCreateStoredFileName(
+            request.FileName,
+            request.ContentType,
+            request.SizeInBytes,
+            AllowedExtensions,
+            AllowedContentTypes,
+            "Tệp hợp đồng là bắt buộc.",
+            "Kích thước tệp không được vượt quá 10MB.",
+            "Chỉ hỗ trợ tệp pdf hoặc docx.");
     }
 
     private string GetUploadsRoot()
     {
-        var webRootPath = _webHostEnvironment.WebRootPath;
-        if (string.IsNullOrWhiteSpace(webRootPath))
-        {
-            webRootPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot");
-        }
-
-        return Path.Combine(webRootPath, "uploads", "contracts");
+        return FileUploadGuard.ResolveUploadRoot(_webHostEnvironment, "uploads", "contracts");
     }
 
     private static string? NormalizeOptional(string? value)

@@ -1,235 +1,45 @@
 # NexInvoice
 
-NexInvoice is a modular monolith for freelance invoice and project management. It helps freelancers manage customers, projects, work items, invoices, payments, notifications, dashboard metrics, and reminder jobs from one Clean Architecture backend.
-
-The project is intentionally kept as a strong junior-to-mid .NET portfolio project: production-minded structure, clear boundaries, practical infrastructure, and no premature microservices.
-
-Author: Pham Nguyen Anh Trung
-Display name: Trung
-
-## Features
-
-- JWT authentication with refresh token rotation and logout.
-- BCrypt password hashing.
-- Role-based and permission-based authorization.
-- Customer, project, work item, invoice, payment, notification, and dashboard modules.
-- Invoice PDF generation with QuestPDF.
-- Payment proof upload with validation.
-- Real-time notifications with SignalR.
-- Background invoice reminder jobs with Hangfire.
-- Redis caching for dashboard summaries.
-- SQL Server persistence with EF Core Fluent API.
-- Docker Compose setup for API, SQL Server, and Redis.
-- xUnit tests for core business rules.
+NexInvoice is a fullstack freelance invoice and project management system. It is built as a Clean Architecture modular monolith with a React/Vite frontend, designed to be practical for demos, code review, and junior .NET portfolio interviews.
 
 ## Tech Stack
 
-- ASP.NET Core Web API
-- .NET 10
-- Entity Framework Core
-- SQL Server
-- Redis
-- SignalR
-- Hangfire
-- MailKit
-- QuestPDF
-- Bogus
-- Swagger / OpenAPI
-- xUnit
-- Docker / Docker Compose
-- React + Vite frontend with Vietnamese UI
+- Backend: ASP.NET Core Web API, .NET 8, Entity Framework Core, SQL Server
+- Infrastructure: Redis cache, Hangfire, SignalR, QuestPDF, MailKit, Serilog, Swagger/OpenAPI
+- Frontend: React, Vite, React Router, TanStack React Query, Axios, Tailwind CSS
+- Testing: xUnit, EF Core InMemory, ASP.NET Core WebApplicationFactory integration tests
+- Deploy: Docker, Docker Compose, Nginx reverse proxy
 
-## Architecture
+## Main Modules
 
-NexInvoice follows Clean Architecture and modular monolith principles.
+- Authentication with JWT access tokens, refresh token rotation, logout, BCrypt password hashing
+- Role and permission authorization for admin/freelancer/client access
+- Clients/customers CRUD
+- Projects CRUD and status tracking
+- Tasks by project with create/update/status actions and attachment upload support
+- Invoices with line items, send/cancel/mark-paid actions, and PDF generation
+- Payments with proof upload, admin confirm/reject workflow, and invoice status updates
+- Contracts with CRUD, upload/download, approve/reject workflow
+- Notifications, SignalR realtime hub, dashboard metrics, and reports
+- Settings for company profile and system preferences
 
-```text
-NexInvoice.API -> NexInvoice.Application -> NexInvoice.Domain
-NexInvoice.API -> NexInvoice.Infrastructure -> NexInvoice.Application -> NexInvoice.Domain
-```
-
-### Layer Responsibilities
-
-- `NexInvoice.Domain`: Entities, enums, common domain primitives, domain events, and value object placeholders.
-- `NexInvoice.Application`: Feature-based DTOs/contracts, interfaces, common models, settings, exceptions, and authorization constants.
-- `NexInvoice.Infrastructure`: EF Core, repositories, services, identity implementations, background jobs, caching, storage placeholders, and dependency injection.
-- `NexInvoice.API`: Controllers, middlewares, filters, extensions, authorization handlers, SignalR hubs, and API startup configuration.
-
-## Folder Structure
+## Project Structure
 
 ```text
-NexInvoice/
-├── src/
-│   ├── NexInvoice.API/
-│   │   ├── Authorization/
-│   │   ├── Controllers/
-│   │   ├── Extensions/
-│   │   ├── Filters/
-│   │   ├── Hubs/
-│   │   ├── Middlewares/
-│   │   ├── Services/
-│   │   └── Program.cs
-│   ├── NexInvoice.Application/
-│   │   ├── Common/
-│   │   ├── Features/
-│   │   │   ├── Auth/
-│   │   │   ├── Customers/
-│   │   │   ├── Dashboard/
-│   │   │   ├── Invoices/
-│   │   │   ├── Payments/
-│   │   │   ├── Projects/
-│   │   │   └── WorkItems/
-│   │   ├── Interfaces/
-│   │   ├── Services/
-│   │   └── UseCases/
-│   ├── NexInvoice.Domain/
-│   │   ├── Common/
-│   │   ├── Entities/
-│   │   ├── Enums/
-│   │   ├── Events/
-│   │   └── ValueObjects/
-│   └── NexInvoice.Infrastructure/
-│       ├── BackgroundJobs/
-│       ├── Caching/
-│       ├── Data/
-│       ├── Identity/
-│       ├── Repositories/
-│       ├── Services/
-│       └── Storage/
-├── tests/
-│   └── NexInvoice.UnitTests/
-├── nexinvoice-web/
-├── docker-compose.yml
-└── NexInvoice.slnx
+src/
+  NexInvoice.API/             Controllers, middleware, auth policies, hubs, startup
+  NexInvoice.Application/     DTOs, interfaces, exceptions, settings, permissions
+  NexInvoice.Domain/          Entities, enums, base domain classes
+  NexInvoice.Infrastructure/  EF Core, services, identity, seed data, background jobs
+tests/
+  NexInvoice.UnitTests/       Unit and API integration tests
+nexinvoice-web/               React + Vite frontend
+docker-compose.yml
+docker-compose.prod.yml
+DEPLOYMENT_VPS.md
 ```
 
-## Naming Conventions
-
-- Project names use `NexInvoice.<Layer>`.
-- Namespaces follow folder structure where practical, for example `NexInvoice.Application.Features.Invoices`.
-- API routes use versioned prefixes: `/api/v1/...`.
-- Application feature folders use business language:
-  - `Customers` for client-facing customer workflows.
-  - `WorkItems` for task/work tracking workflows.
-  - `Invoices`, `Payments`, `Projects`, `Dashboard`, and `Auth` for their respective modules.
-- Domain entity names remain singular, for example `Client`, `Project`, `Invoice`, `Payment`.
-- DTOs use request/response suffixes:
-  - `CreateInvoiceRequest`
-  - `InvoiceResponse`
-  - `ProjectListItemResponse`
-- Service interfaces use the `I` prefix and stay in `Application/Interfaces`.
-- Infrastructure implementations are grouped by responsibility: `Identity`, `Services`, `BackgroundJobs`, `Caching`, `Storage`, and `Data`.
-
-## Git Commit Convention
-
-Use a lightweight Conventional Commits style:
-
-```text
-feat: add invoice PDF generation
-fix: prevent cancelled invoice from being marked paid
-refactor: move application DTOs into feature folders
-test: add payment business rule tests
-docs: update Docker run instructions
-chore: rename solution to NexInvoice
-```
-
-Recommended types:
-
-- `feat`: New feature.
-- `fix`: Bug fix.
-- `refactor`: Internal code restructuring without behavior change.
-- `test`: Test additions or updates.
-- `docs`: Documentation changes.
-- `chore`: Tooling, config, rename, or maintenance work.
-
-## Database Design Summary
-
-The database is organized around identity, customer management, project delivery, invoicing, payments, and notifications.
-
-- Identity: `AppUser`, `Role`, `Permission`, `UserRole`, `RolePermission`, `RefreshToken`.
-- Business: `Client`, `Project`, `TaskItem`, `TaskComment`, `TaskAttachment`, `Contract`.
-- Finance: `Invoice`, `InvoiceItem`, `Payment`.
-- Platform: `Notification`, `AuditLog`.
-
-Persistence notes:
-
-- Primary keys use `Guid`.
-- Soft delete uses `IsDeleted`.
-- EF Core relationships are configured with Fluent API.
-- Money fields use decimal precision.
-- Global query filters exclude soft-deleted rows.
-- Startup initialization applies migrations, seeds system data, and can generate demo business data.
-
-## API Documentation
-
-Swagger UI:
-
-```text
-http://localhost:8080/swagger
-```
-
-Main API route convention:
-
-```text
-/api/v1/[controller]
-```
-
-Examples:
-
-```text
-POST   /api/v1/auth/register
-POST   /api/v1/auth/login
-
-GET    /api/v1/clients
-POST   /api/v1/clients
-GET    /api/v1/clients/{id}
-
-GET    /api/v1/projects
-PATCH  /api/v1/projects/{id}/status
-GET    /api/v1/projects/{projectId}/tasks
-
-GET    /api/v1/tasks/{id}
-PATCH  /api/v1/tasks/{id}/status
-
-GET    /api/v1/invoices
-GET    /api/v1/invoices/{id}/pdf
-PATCH  /api/v1/invoices/{id}/mark-paid
-
-POST   /api/v1/payments
-GET    /api/v1/invoices/{invoiceId}/payments
-PATCH  /api/v1/payments/{id}/confirm
-
-GET    /api/v1/notifications
-GET    /api/v1/dashboard/summary
-```
-
-SignalR hub:
-
-```text
-/hubs/notifications
-```
-
-## Appsettings Structure
-
-The API supports environment-specific configuration files:
-
-```text
-appsettings.json
-appsettings.Development.json
-appsettings.Staging.json
-appsettings.Production.json
-```
-
-Keep secrets out of source control for staging and production. Prefer environment variables, Docker secrets, or deployment platform secret stores.
-
-## How to Run Locally
-
-Prerequisites:
-
-- .NET 10 SDK
-- SQL Server
-- Redis
-- Docker Desktop, optional
+## Local Run
 
 Backend:
 
@@ -237,12 +47,6 @@ Backend:
 dotnet restore .\NexInvoice.slnx
 dotnet build .\NexInvoice.slnx
 dotnet run --project .\src\NexInvoice.API\NexInvoice.API.csproj
-```
-
-Tests:
-
-```powershell
-dotnet test .\NexInvoice.slnx
 ```
 
 Frontend:
@@ -253,36 +57,32 @@ npm install
 npm run dev
 ```
 
-## Docker Setup
+Default frontend API base URL is `/api/v1`. Set `VITE_API_BASE_URL` when the API is hosted elsewhere.
 
-Start backend infrastructure:
+## Docker Run
+
+Development stack:
 
 ```powershell
 docker compose up --build
 ```
 
-URLs:
-
-```text
-API:                http://localhost:8080
-Swagger UI:         http://localhost:8080/swagger
-Hangfire Dashboard: http://localhost:8080/hangfire
-SignalR Hub:        http://localhost:8080/hubs/notifications
-```
-
-Stop:
+Production-style stack:
 
 ```powershell
-docker compose down
+docker compose -f docker-compose.prod.yml up -d --build
 ```
 
-Stop and remove volumes:
+Useful URLs:
 
-```powershell
-docker compose down -v
-```
+- API: `http://localhost:8080`
+- Swagger: `http://localhost:8080/swagger`
+- Hangfire: `http://localhost:8080/hangfire`
+- SignalR hub: `/hubs/notifications`
 
 ## Demo Account
+
+Demo users are seeded only when `Database:SeedDemoUsers` or `SEED_DEMO_USERS=true` is enabled.
 
 ```text
 Email:    admin@nexinvoice.com
@@ -290,35 +90,81 @@ Password: Admin@123
 Role:     Admin
 ```
 
-## Vietnamese UI Note
+## Main End-to-End Flows
 
-The frontend UI and API response messages are intended for Vietnamese users. Code identifiers, namespaces, entities, DTOs, and routes remain in English for maintainability.
+1. Client -> Project -> Task
+   - Create a client.
+   - Create a project for that client.
+   - Create tasks inside the project and update task status.
 
-## Screenshots
+2. Invoice -> Items -> Send/Cancel/Mark Paid/PDF
+   - Create an invoice from a project.
+   - Add invoice item data.
+   - Send, cancel, mark paid, or download PDF.
 
-Place screenshots under:
+3. Payment -> Upload Proof -> Confirm/Reject
+   - Create a payment for an invoice.
+   - Upload proof file.
+   - Admin confirms or rejects the payment.
+   - Confirmed payments update invoice status.
+
+## API Docs
+
+Swagger is available in development, or when `Swagger:Enabled=true`:
 
 ```text
-docs/screenshots/login.png
-docs/screenshots/dashboard.png
-docs/screenshots/customers.png
-docs/screenshots/project-detail.png
-docs/screenshots/invoice-detail.png
-docs/screenshots/notifications.png
+http://localhost:8080/swagger
 ```
 
-## CV Bullet Points
+Main routes use `/api/v1/...`, for example:
 
-- Built a Clean Architecture ASP.NET Core modular monolith for freelance invoice and project management.
-- Organized the Application layer by features and separated Domain, Infrastructure, and API concerns.
-- Implemented JWT authentication, refresh token rotation, BCrypt password hashing, and permission-based authorization.
-- Designed EF Core persistence with SQL Server, Fluent API, soft delete filters, seed data, and migrations.
-- Integrated SignalR, Hangfire, Redis caching, MailKit, QuestPDF, Docker, and xUnit tests.
+- `POST /api/v1/auth/login`
+- `GET /api/v1/clients`
+- `GET /api/v1/projects`
+- `GET /api/v1/projects/{projectId}/tasks`
+- `GET /api/v1/invoices`
+- `GET /api/v1/invoices/{id}/pdf`
+- `POST /api/v1/payments`
+- `PATCH /api/v1/payments/{id}/confirm`
 
-## Future Improvements
+## Tests
 
-- Add integration tests with Testcontainers.
-- Add audit logging pipeline.
-- Add production-ready file storage abstraction.
-- Add CI/CD with build, test, Docker image publish, and deployment stages.
-- Add frontend Docker support and reverse proxy configuration.
+```powershell
+dotnet test .\NexInvoice.slnx
+```
+
+Current coverage includes core business-rule tests and API integration tests for:
+
+- Auth register/login
+- Clients CRUD
+- Projects CRUD
+- Invoices create/mark-paid/cancel
+- Payments create/confirm/reject
+
+Frontend build check:
+
+```powershell
+cd nexinvoice-web
+npm run build
+```
+
+## CI
+
+GitHub Actions workflow is defined at `.github/workflows/ci.yml` and runs on push/pull request to `main`:
+
+- Restore backend
+- Build backend
+- Test backend
+- Install frontend dependencies
+- Build frontend
+
+## Security Notes
+
+- JWT secrets and database passwords must be provided through environment variables or deployment secrets in production.
+- Uploads are limited to 10MB and restricted to whitelisted extensions/content types.
+- Stored upload filenames are randomized GUID names.
+- Permission policies are applied to business controllers including contracts, reports, and settings.
+
+## Deployment
+
+See `DEPLOYMENT_VPS.md` for Docker Compose based VPS deployment. Automatic deploy is intentionally not enabled because server secrets are not part of the repository.

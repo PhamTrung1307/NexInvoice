@@ -1,3 +1,5 @@
+using NexInvoice.API.Authorization;
+using NexInvoice.Application.Common.Authorization;
 using NexInvoice.Application.Common.Models;
 using NexInvoice.Application.Features.Settings;
 using NexInvoice.Application.Interfaces;
@@ -19,6 +21,7 @@ public sealed class SettingsController : ControllerBase
     }
 
     [HttpGet("company")]
+    [HasPermission(AppPermissions.SettingsManage)]
     public async Task<ActionResult<ApiResponse<CompanyProfileResponse>>> GetCompany(CancellationToken cancellationToken)
     {
         var result = await _settingsService.GetCompanyProfileAsync(cancellationToken);
@@ -26,6 +29,7 @@ public sealed class SettingsController : ControllerBase
     }
 
     [HttpPut("company")]
+    [HasPermission(AppPermissions.SettingsManage)]
     public async Task<ActionResult<ApiResponse<CompanyProfileResponse>>> UpdateCompany(
         UpdateCompanyProfileRequest request,
         CancellationToken cancellationToken)
@@ -35,6 +39,7 @@ public sealed class SettingsController : ControllerBase
     }
 
     [HttpGet("preferences")]
+    [HasPermission(AppPermissions.SettingsManage)]
     public async Task<ActionResult<ApiResponse<SystemPreferenceResponse>>> GetPreferences(CancellationToken cancellationToken)
     {
         var result = await _settingsService.GetSystemPreferencesAsync(cancellationToken);
@@ -42,6 +47,7 @@ public sealed class SettingsController : ControllerBase
     }
 
     [HttpPut("preferences")]
+    [HasPermission(AppPermissions.SettingsManage)]
     public async Task<ActionResult<ApiResponse<SystemPreferenceResponse>>> UpdatePreferences(
         UpdateSystemPreferenceRequest request,
         CancellationToken cancellationToken)

@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: FreelanceHub
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore backend
+        run: dotnet restore ./NexInvoice.slnx
+
+      - name: Build backend
+        run: dotnet build ./NexInvoice.slnx --configuration Release --no-restore
+
+      - name: Test backend
+        run: dotnet test ./NexInvoice.slnx --configuration Release --no-build
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: FreelanceHub/nexinvoice-web/package-lock.json
+
+      - name: Install frontend
+        run: npm ci
+        working-directory: FreelanceHub/nexinvoice-web
+
+      - name: Build frontend
+        run: npm run build
+        working-directory: FreelanceHub/nexinvoice-web

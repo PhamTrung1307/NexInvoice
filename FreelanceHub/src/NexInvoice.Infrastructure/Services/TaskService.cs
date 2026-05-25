@@ -24,6 +24,15 @@ internal sealed class TaskService : ITaskService
         ".xlsx"
     };
 
+    private static readonly HashSet<string> AllowedContentTypes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "image/jpeg",
+        "image/png",
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    };
+
     private readonly AppDbContext _dbContext;
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly IRealtimeNotificationService _realtimeNotificationService;
@@ -280,8 +289,7 @@ internal sealed class TaskService : ITaskService
         Directory.CreateDirectory(uploadsRoot);
 
         var originalFileName = Path.GetFileName(request.FileName);
-        var extension = Path.GetExtension(originalFileName);
-        var storedFileName = $"{Guid.NewGuid():N}{extension}";
+        var storedFileName = CreateStoredAttachmentFileName(request);
         var storedFilePath = Path.Combine(uploadsRoot, storedFileName);
 
         await using (var fileStream = File.Create(storedFilePath))
@@ -469,29 +477,25 @@ internal sealed class TaskService : ITaskService
             throw new BadRequestException("Tệp tải lên là bắt buộc.");
         }
 
-        if (request.SizeInBytes > MaxFileSizeInBytes)
-        {
-            throw new BadRequestException("Kích thước tệp không được vượt quá 10MB.");
-        }
+        _ = CreateStoredAttachmentFileName(request);
+    }
 
-        var extension = Path.GetExtension(request.FileName);
-
-        if (string.IsNullOrWhiteSpace(extension) || !AllowedExtensions.Contains(extension))
-        {
-            throw new BadRequestException("Định dạng tệp không được hỗ trợ.");
-        }
+    private static string CreateStoredAttachmentFileName(UploadTaskAttachmentRequest request)
+    {
+        return FileUploadGuard.ValidateAndCreateStoredFileName(
+            request.FileName,
+            request.ContentType,
+            request.SizeInBytes,
+            AllowedExtensions,
+            AllowedContentTypes,
+            "Tệp tải lên là bắt buộc.",
+            "Kích thước tệp không được vượt quá 10MB.",
+            "Định dạng tệp không được hỗ trợ.");
     }
 
     private string GetTaskUploadsRoot()
     {
-        var webRootPath = _webHostEnvironment.WebRootPath;
-
-        if (string.IsNullOrWhiteSpace(webRootPath))
-        {
-            webRootPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot");
-        }
-
-        return Path.Combine(webRootPath, "uploads", "tasks");
+        return FileUploadGuard.ResolveUploadRoot(_webHostEnvironment, "uploads", "tasks");
     }
 
     private static string? NormalizeOptional(string? value)

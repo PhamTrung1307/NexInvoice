@@ -25,6 +25,15 @@ internal sealed class PaymentService : IPaymentService
         ".xlsx"
     };
 
+    private static readonly HashSet<string> AllowedContentTypes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "image/jpeg",
+        "image/png",
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    };
+
     private readonly AppDbContext _dbContext;
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly IRealtimeNotificationService _realtimeNotificationService;
@@ -129,8 +138,7 @@ internal sealed class PaymentService : IPaymentService
         Directory.CreateDirectory(uploadsRoot);
 
         var originalFileName = Path.GetFileName(request.FileName);
-        var extension = Path.GetExtension(originalFileName);
-        var storedFileName = $"{Guid.NewGuid():N}{extension}";
+        var storedFileName = CreateStoredProofFileName(request);
         var storedFilePath = Path.Combine(uploadsRoot, storedFileName);
 
         await using (var fileStream = File.Create(storedFilePath))
@@ -380,29 +388,25 @@ internal sealed class PaymentService : IPaymentService
             throw new BadRequestException("Tệp minh chứng thanh toán là bắt buộc.");
         }
 
-        if (request.SizeInBytes > MaxFileSizeInBytes)
-        {
-            throw new BadRequestException("Kích thước tệp không được vượt quá 10MB.");
-        }
+        _ = CreateStoredProofFileName(request);
+    }
 
-        var extension = Path.GetExtension(request.FileName);
-
-        if (string.IsNullOrWhiteSpace(extension) || !AllowedExtensions.Contains(extension))
-        {
-            throw new BadRequestException("Định dạng tệp minh chứng không được hỗ trợ.");
-        }
+    private static string CreateStoredProofFileName(UploadPaymentProofRequest request)
+    {
+        return FileUploadGuard.ValidateAndCreateStoredFileName(
+            request.FileName,
+            request.ContentType,
+            request.SizeInBytes,
+            AllowedExtensions,
+            AllowedContentTypes,
+            "Tệp minh chứng thanh toán là bắt buộc.",
+            "Kích thước tệp không được vượt quá 10MB.",
+            "Định dạng tệp minh chứng không được hỗ trợ.");
     }
 
     private string GetPaymentUploadsRoot()
     {
-        var webRootPath = _webHostEnvironment.WebRootPath;
-
-        if (string.IsNullOrWhiteSpace(webRootPath))
-        {
-            webRootPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot");
-        }
-
-        return Path.Combine(webRootPath, "uploads", "payments");
+        return FileUploadGuard.ResolveUploadRoot(_webHostEnvironment, "uploads", "payments");
     }
 
     private static string? NormalizeOptional(string? value)
