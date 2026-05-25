@@ -1,0 +1,25 @@
+.env
+.env.*
+!.env.example
+!.env.local.example
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.local.example
+
+.vs/
+**/.vs/
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+
+*.user
+*.suo
+*.log
+*.tmp
+
+# Keep committed appsettings files secret-free. Use environment variables or
+# untracked local override files for machine-specific secrets.
+**/appsettings.Development.local.json
+**/appsettings.Local.json

@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using NexInvoice.Application.Common.Authorization;
@@ -258,22 +259,20 @@ public sealed class NexInvoiceApiFactory : WebApplicationFactory<Program>
     private readonly InMemoryDatabaseRoot _databaseRoot = new();
     private readonly string _databaseName = $"NexInvoiceApiTests-{Guid.NewGuid():N}";
 
+    public NexInvoiceApiFactory()
+    {
+        Environment.SetEnvironmentVariable("JwtSettings__Issuer", "NexInvoice");
+        Environment.SetEnvironmentVariable("JwtSettings__Audience", "NexInvoice.Api");
+        Environment.SetEnvironmentVariable("JwtSettings__SecretKey", Convert.ToBase64String(RandomNumberGenerator.GetBytes(48)));
+        Environment.SetEnvironmentVariable("JwtSettings__Secret", Convert.ToBase64String(RandomNumberGenerator.GetBytes(48)));
+        Environment.SetEnvironmentVariable("JwtSettings__AccessTokenExpirationMinutes", "60");
+        Environment.SetEnvironmentVariable("JwtSettings__RefreshTokenExpirationDays", "7");
+        Environment.SetEnvironmentVariable("Redis__Enabled", "false");
+    }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Testing");
-        builder.ConfigureAppConfiguration(configuration =>
-        {
-            configuration.AddInMemoryCollection(new Dictionary<string, string?>
-            {
-                ["JwtSettings:Issuer"] = "NexInvoice",
-                ["JwtSettings:Audience"] = "NexInvoice.Api",
-                ["JwtSettings:SecretKey"] = "NexInvoice_Tests_Jwt_Secret_Key_At_Least_32_Characters",
-                ["JwtSettings:Secret"] = "NexInvoice_Tests_Jwt_Secret_Key_At_Least_32_Characters",
-                ["JwtSettings:AccessTokenExpirationMinutes"] = "60",
-                ["JwtSettings:RefreshTokenExpirationDays"] = "7",
-                ["Redis:Enabled"] = "false"
-            });
-        });
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<DbContextOptions<AppDbContext>>();

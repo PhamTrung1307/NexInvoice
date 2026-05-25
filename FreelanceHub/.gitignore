@@ -6,5 +6,8 @@
 .env
 .env.*
 !.env.example
+!.env.local.example
+appsettings.Development.local.json
+appsettings.Local.json
 *.user
 *.suo
